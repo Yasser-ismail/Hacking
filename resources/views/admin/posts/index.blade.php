@@ -39,7 +39,11 @@
                     <td>{{$post->id}}</td>
                     <td>{{$post->user->name}}</td>
                     <td>{{$post->category->name}}</td>
+               @if($post->photo)
                     <td><img src="{{$post->photo->path}}" alt="Post Photo" style="height: 50px;width: 100px;"></td>
+                    @else
+                        <td>No Photo</td>
+                @endif
                     <td>{{$post->title}}</td>
                     <td>{{$post->body}}</td>
                     <td>{{$post->created_at->diffForHumans()}}</td>
