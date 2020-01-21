@@ -7,6 +7,16 @@
         <p class="bg-danger">{{session('deleted_post')}}</p>
 
     @endif
+    @if(Session::has('not_admin'))
+
+        <p class="bg-danger">{{session('not_admin')}}</p>
+
+    @endif
+    @if(Session::has('not_owner'))
+
+        <p class="bg-danger">{{session('not_owner')}}</p>
+
+    @endif
 
     @if(Session::has('created_post'))
         <p class="bg-primary">{{session('created_post')}}</p>
@@ -44,8 +54,8 @@
                     @else
                         <td>No Photo</td>
                 @endif
-                    <td>{{$post->title}}</td>
-                    <td>{{$post->body}}</td>
+                    <td><a href="{{route('posts.edit',[$post->id])}}">{{$post->title}}</a></td>
+                    <td><a href="{{route('posts.edit', [$post->id])}}"> {{$post->body}}</a></td>
                     <td>{{$post->created_at->diffForHumans()}}</td>
                     <td>{{$post->updated_at->diffForHumans()}}</td>
 

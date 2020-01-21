@@ -95,7 +95,10 @@ class AdminPostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $categories = Category::all();
+
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -105,9 +108,34 @@ class AdminPostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminPostsRequest $request, $id)
     {
-        //
+        $input = $request->all();
+        if($file = $request->file('photo_id')){
+            $name = '/images/' . time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['path'=>$name]);
+
+            $input['photo_id'] = $photo->id;
+        }
+
+
+        if (is_null(Auth::user()->posts()->whereId($id)->first())) {
+
+            Session::flash('not_owner', 'You can update your posts only!');
+
+            return redirect('/posts');
+            // it's null, redirect or do something
+        } else {
+            // It's not null, update the post
+            Auth::user()->posts()->whereId($id)->first()->update($input);
+
+            Session::flash('updated_post', 'Post has been updated!');
+
+            return redirect('/posts');
+
+        }
+
     }
 
     /**
@@ -118,6 +146,27 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(Auth::user()->IsAdmin() || !is_null(Auth::user()->posts->where('id', $id)->first())){
+
+            $post = Post::findOrFail($id);
+
+                if($post->photo){
+                    $post->photo->delete();
+                    unlink(public_path(). $post->photo->path);
+                }
+
+
+            $post->delete();
+
+
+            Session::flash('deleted_post', 'Post has been deleted');
+
+            return redirect('/posts');
+        }else{
+            Session::flash('not_admin', 'Admin Or Auther Can only delete the post!');
+
+            return redirect('/posts');
+        }
+
     }
 }
