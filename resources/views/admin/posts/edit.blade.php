@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Create Post</h1>
+    <h1>Create Category</h1>
 
     {{--    {!! Form::open(['method'=>'post', 'action'=>'AdminUsersController@store']) !!}--}}
 
