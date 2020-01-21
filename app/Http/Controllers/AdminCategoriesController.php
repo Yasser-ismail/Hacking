@@ -36,7 +36,8 @@ class AdminCategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = Category::all();
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
@@ -53,7 +54,7 @@ class AdminCategoriesController extends Controller
 
         Session::flash('created_category', 'Category has been created!');
 
-        return redirect('/categories');
+        return redirect('/categories/create');
 
     }
 
@@ -77,8 +78,9 @@ class AdminCategoriesController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail($id);
+        $categories = Category::all();
 
-        return view('admin.categories.edit', compact('category'));
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
     /**
