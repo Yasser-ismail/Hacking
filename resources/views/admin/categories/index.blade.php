@@ -7,7 +7,7 @@
         <p class="bg-danger">{{session('deleted_category')}}</p>
 
     @endif
-    
+
     @if(Session::has('created_category'))
         <p class="bg-primary">{{session('created_category')}}</p>
     @endif
