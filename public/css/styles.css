@@ -37,3 +37,8 @@
 .toppad
 {margin-top:20px;
 }
+/* reply */
+
+.reply-container{
+    display: none;
+}

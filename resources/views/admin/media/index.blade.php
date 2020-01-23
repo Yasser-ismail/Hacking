@@ -37,18 +37,17 @@
                     <td>
                         @if($photo->post)
 
-                        {{'Post : '. $photo->post->id}}
-
-                        @endif
-                        @if($photo->user)
+                            <a href="{{route('post.home', $photo->post->id)}}">{{'Post : '. $photo->post->id}}</a>
+                        @elseif($photo->user)
 
                             {{'User : ' . $photo->user->id}}
 
-                            @else
+                        @else
 
-                                {{'Server Photos'}}
+                            {{'Server Photos'}}
 
                         @endif
+
 
                     </td>
                     <td><img src="{{$photo->path}}" alt="" style="height: 50px;width: 100px;"></td>
