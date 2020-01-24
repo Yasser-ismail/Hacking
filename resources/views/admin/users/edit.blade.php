@@ -6,7 +6,7 @@
 
  <div class="row">
     <div class="col-sm-3">
-        <img src="{{$user->photo->path}}" alt="User Photo" class="img-responsive img-rounded">
+        <img src="@if($user->photo){{$user->photo->path}} @endif" alt="User Photo" class="img-responsive img-rounded">
     </div>
 
         <div class="col-sm-9">

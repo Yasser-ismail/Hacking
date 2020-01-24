@@ -32,7 +32,7 @@
                     <td>{{$comment->email}}</td>
                     <td>{{$comment->body}}</td>
                     <td>{{$comment->created_at->diffForHumans()}}</td>
-                    <td><a href="{{route('post.home', [$comment->post_id])}}">View Post</a></td>
+                    <td><a href="{{route('post.home', [$comment->post->slug])}}">View Post</a></td>
                     <td><a href="{{route('replies', $id = $comment->id)}}">View Replies</a> </td>
                     <td>
                         @if($comment->is_active == 1)

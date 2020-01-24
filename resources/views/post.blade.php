@@ -68,7 +68,7 @@
 
                <div class="media">
                    <a class="pull-left" href="#">
-                      <img class="media-object img-responsive" src="{{$comment->user_photo_path}}" alt="" style="width:32px; height: 32px;" >
+                      <img class="media-object img-responsive" src="{{$comment->user_photo_path}}" alt="a7a" style="width:32px; height: 32px;" >
                    </a>
                    <div class="media-body">
                       <h4 class="media-heading">{{$comment->author}}

@@ -170,9 +170,9 @@ class AdminPostsController extends Controller
 
     }
 
-    public function post($id){
+    public function post($slug){
 
-        $post = Post::findOrFail($id);
+        $post = Post::findBySlugOrFail($slug);
 
         return view('post', compact('post'));
     }

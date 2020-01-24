@@ -61,6 +61,11 @@
                 <li>
                     <a href="#">Contact</a>
                 </li>
+                @if(Auth::user()->IsAdmin())
+                <li>
+                    <a href="/admin">Admin</a>
+                </li>
+                @endif
             </ul>
         </div>
         <!-- /.navbar-collapse -->

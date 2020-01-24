@@ -28,9 +28,10 @@ class AdminUsersController extends Controller
         }
 
         $users = User::all();
-
         return view('admin.users.index', compact('users'));
+
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -52,17 +53,17 @@ class AdminUsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(AdminUsersRequest $request)
     {
         $input = $request->all();
 
-        if($file = $request->file('photo_id')){
-            $name = '/images/'.time().$file->getClientOriginalName();
+        if ($file = $request->file('photo_id')) {
+            $name = '/images/' . time() . $file->getClientOriginalName();
             $file->move('images', $name);
-            $photo = Photo::create(['path'=>$name]);
+            $photo = Photo::create(['path' => $name]);
             $input['photo_id'] = $photo->id;
         }
         $input['password'] = bcrypt($request->password);
@@ -78,7 +79,7 @@ class AdminUsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -89,7 +90,7 @@ class AdminUsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -103,29 +104,56 @@ class AdminUsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(AdminUsersUpdateRequest $request, $id)
     {
         $user = User::findOrFail($id);
 
-        if($request->password == ''){
+        if ($request->password == '') {
             $input = $request->except('password');
-        }else{
+        } else {
             $input = $request->all();
             $input['password'] = bcrypt($request->password);
         }
 
-        if($file = $request->file('photo_id')){
-            $name = '/images/'.time().$file->getClientOriginalName();
+        if ($file = $request->file('photo_id')) {
+            $name = '/images/' . time() . $file->getClientOriginalName();
             $file->move('images', $name);
-            $photo = Photo::create(['path'=>$name]);
+            $photo = Photo::create(['path' => $name]);
             $input['photo_id'] = $photo->id;
+
+            $posts = $user->posts()->get();
         }
 
-        Session::flash('updated_user', 'User has been updated!');
+        foreach ($user->posts as $post) {
+            if ($post->comments) {
+                foreach ($post->comments as $comment) {
+                    if($comment->author == $user->name) {
+                        $comment['user_photo_path'] = $name;
+
+                        $comment->update();
+                    }
+
+                    if ($comment->replies) {
+                        foreach ($comment->replies as $reply) {
+                            if($reply->author == $user->name){
+                                $reply['user_photo_path'] = $name;
+
+                                $reply->update();
+                            }
+
+                        }
+                    }
+                }
+
+            }
+        }
+
+
+         Session::flash('updated_user', 'User has been updated!');
 
 
         $user->update($input);
