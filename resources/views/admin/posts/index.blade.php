@@ -72,4 +72,10 @@
         @endif
     </table>
 
+    <div class="row text-center">
+        <div class="col-sm-12">
+            {{$posts->render()}}
+        </div>
+    </div>
+
 @endsection

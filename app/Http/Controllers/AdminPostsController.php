@@ -27,7 +27,7 @@ class AdminPostsController extends Controller
             // error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
         }
 
-        $posts = Post::all();
+        $posts = Post::paginate(2);
 
         return view('admin.posts.index', compact('posts'));
     }

@@ -17,12 +17,12 @@
 
       <!-- Date/Time -->
       <p><span class="glyphicon glyphicon-time"></span>{{$post->created_at->diffForHumans()}}</p>
-
+       @if($post->photo)
       <hr>
 
       <!-- Preview Image -->
       <img class="img-responsive" src="{{$post->photo->path}}" alt="">
-
+       @endif
       <hr>
 
       <!-- Post Content -->

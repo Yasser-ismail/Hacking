@@ -15,26 +15,36 @@
 </div>
 <div class="row">
     <div class="form-group col-sm-6">
+        <div class="row">
+            <h1>Edit Category</h1>
+            <form method="POST" action="/categories/{{$category->id}}" enctype="multipart/form-data">
 
-        <h1>Edit Category</h1>
-        <form method="POST" action="/categories/{{$category->id}}" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <input type="hidden" name="_method" value="PATCH">
 
-            {{csrf_field()}}
-            <input type="hidden" name="_method" value="PATCH">
-            <div class="row">
-                <div class="form-group">
-                    <label>Name:</label>
-                    <input type="text" name="name" value="{{$category->name}}" class="form-control ">
-                </div>
-            </div>
-            {{--submit button--}}
-            <div class="row">
-                <div class="form-group">
-                    <input type="submit" value="Edit Category" class="btn btn-primary">
-                </div>
-            </div>
-        </form>
-        @include('includes.errors')
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" name="name" value="{{$category->name}}" class="form-control ">
+                    </div>
+
+                {{--submit button--}}
+
+                    <div class="form-group">
+                        <input type="submit" value="Update Category" class="btn btn-primary col-sm-6">
+                    </div>
+
+            </form>
+            <form action="/categories/{{$category->id}}" method="POST">
+                    {{csrf_field()}}
+                  <input type="hidden" name="_method" value="DELETE">
+
+                  <input type="submit" value="Delete Category" class="btn btn-danger col-sm-6">
+
+            </form>
+        </div>
+       <div class="row">
+            @include('includes.errors')
+        </div>
     </div>
 
     <div class="col-sm-6">
