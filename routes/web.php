@@ -41,6 +41,7 @@ Route::group(['middleware'=>'admin'], function (){
     //MEDIA
     Route::get('/media/upload', 'AdminMediaController@upload')->name('media.upload');
     Route::resource('media', 'AdminMediaController');
+    Route::delete('medias/delete', ['as'=>'medias.delete', 'uses'=>'AdminMediaController@deletemedia']);
 
     //COMMENTS
 
